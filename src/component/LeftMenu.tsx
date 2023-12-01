@@ -51,7 +51,6 @@ const Container = styled.div`
     align-items: center;
 
     width: 70px;
-    flex: 1;
     gap: 3rem;
 
     background-color: #4f5458;
