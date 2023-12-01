@@ -1,12 +1,15 @@
-import "./App.css";
-import LeftMenu from "./component/LeftMenu";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Home from "./pages/Home";
 
 function App() {
-    return (
-        <>
-            <LeftMenu />
-        </>
-    );
+    const router = createBrowserRouter([
+        {
+            path: "/",
+            element: <Home />,
+        },
+    ]);
+
+    return <RouterProvider router={router} />;
 }
 
 export default App;
