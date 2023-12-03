@@ -1,3 +1,4 @@
+import { useContext } from "react";
 import styled from "styled-components";
 import ActionIcon from "../assets/action.svg?react";
 import RomanceIcon from "../assets/romance.svg?react";
@@ -6,11 +7,15 @@ import HorrorIcon from "../assets/horror.svg?react";
 import ComedicIcon from "../assets/comedic.svg?react";
 import LeftIcon from "../assets/leftArrow.svg?react";
 import HomeIcon from "../assets/home.svg?react";
+import LeftMenuContext from "../context/leftMenuContext";
 
 function LeftMenu() {
+    const { leftMenuState, setLeftMenuState } = useContext(LeftMenuContext);
+    const onCloseLeftMenu = () => setLeftMenuState(false);
+
     return (
-        <Container>
-            <div className="close_btn">
+        <Container $show={leftMenuState}>
+            <div className="close_btn" onClick={onCloseLeftMenu}>
                 <LeftIcon />
             </div>
             <MenuIcon>
@@ -57,12 +62,17 @@ function LeftMenu() {
 
 export default LeftMenu;
 
-const Container = styled.div`
-    position: relative;
+const Container = styled.div<{ $show: boolean }>`
+    position: absolute;
+    z-index: 10;
     display: flex;
     flex-direction: column;
     padding: 40px 0;
     background-color: #4f5458;
+
+    transition: transform 0.5s;
+    transform: ${({ $show }) =>
+        $show ? "translateX(0px)" : "translateX(-100px)"};
 
     .close_btn {
         position: absolute;
@@ -77,7 +87,7 @@ const Container = styled.div`
 
         &:hover {
             border-radius: 3px;
-            box-shadow: 1px 1px 2px 1px #ccd2d7;
+            box-shadow: 0px 0px 1px 1px #80858a;
         }
     }
 `;
