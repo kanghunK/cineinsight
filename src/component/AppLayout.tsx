@@ -3,7 +3,7 @@ import styled from "styled-components";
 import LeftMenu from "./LeftMenu";
 import { StrictPropsWithChildren } from "../type/types";
 import RightIcon from "../assets/rightArrow.svg?react";
-import LeftMenuContext from "../context/leftMenuContext";
+import LeftMenuContext from "../context/LeftMenuContext";
 
 function AppLayout({ children }: StrictPropsWithChildren) {
     const [leftMenuState, setLeftMenuState] = useState(false);

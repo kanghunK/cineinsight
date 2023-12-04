@@ -7,7 +7,7 @@ import HorrorIcon from "../assets/horror.svg?react";
 import ComedicIcon from "../assets/comedic.svg?react";
 import LeftIcon from "../assets/leftArrow.svg?react";
 import HomeIcon from "../assets/home.svg?react";
-import LeftMenuContext from "../context/leftMenuContext";
+import LeftMenuContext from "../context/LeftMenuContext";
 
 function LeftMenu() {
     const { leftMenuState, setLeftMenuState } = useContext(LeftMenuContext);
