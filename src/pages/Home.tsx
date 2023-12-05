@@ -1,5 +1,10 @@
 import { useState } from "react";
 import styled from "styled-components";
+import ActionIcon from "@/assets/action.svg?react";
+import RomanceIcon from "@/assets/comedic.svg?react";
+import ThillerIcon from "@/assets/home.svg?react";
+import HorrorIcon from "@/assets/horror.svg?react";
+import ComedicIcon from "@/assets/romance.svg?react";
 
 function Home() {
     const [focused, setFocused] = useState<boolean>(false);
@@ -31,16 +36,28 @@ function Home() {
                         <SearchFormButton type="submit">검색</SearchFormButton>
                     </SearchFormChildDiv>
                 </form>
-                <MovieCategory>
-                    <div className="category">
-                        <img src="" alt="" />
-                        <p></p>
-                    </div>
-                    <div className="category"></div>
-                    <div className="category"></div>
-                    <div className="category"></div>
-                    <div className="category"></div>
-                </MovieCategory>
+                <MovieCategoryBox>
+                    <MovieCategory>
+                        <ActionIcon />
+                        <p>Action</p>
+                    </MovieCategory>
+                    <MovieCategory>
+                        <RomanceIcon />
+                        <p>Romance</p>
+                    </MovieCategory>
+                    <MovieCategory>
+                        <ThillerIcon />
+                        <p>Thiller</p>
+                    </MovieCategory>
+                    <MovieCategory>
+                        <HorrorIcon />
+                        <p>Horror</p>
+                    </MovieCategory>
+                    <MovieCategory>
+                        <ComedicIcon />
+                        <p>Comedic</p>
+                    </MovieCategory>
+                </MovieCategoryBox>
             </Content>
         </HomeContainer>
     );
@@ -54,7 +71,7 @@ const HomeContainer = styled.div`
     overflow: hidden;
 `;
 
-const MovieCategory = styled.div`
+const MovieCategoryBox = styled.div`
     position: relative;
     display: flex;
     align-items: center;
@@ -78,6 +95,8 @@ const MovieCategory = styled.div`
         }
     }
 `;
+
+const MovieCategory = styled.div``;
 
 const Content = styled.div`
     position: absolute;
