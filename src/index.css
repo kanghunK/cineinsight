@@ -8,13 +8,11 @@
 }
 
 body {
-  width: 100%;
-  min-width: 320px;
-  min-height: 100vh;
   margin: 0;
+  word-break: keep-all;
 }
 
 #root {
-  width: inherit;
+  height: 100vh;
   overflow: hidden;
 }
