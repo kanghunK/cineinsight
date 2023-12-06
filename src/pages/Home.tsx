@@ -2,7 +2,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import ActionIcon from "@/assets/action.svg?react";
 import RomanceIcon from "@/assets/comedic.svg?react";
-import ThillerIcon from "@/assets/home.svg?react";
+import ThillerIcon from "@/assets/thriller.svg?react";
 import HorrorIcon from "@/assets/horror.svg?react";
 import ComedicIcon from "@/assets/romance.svg?react";
 
@@ -11,6 +11,9 @@ function Home() {
 
     return (
         <HomeContainer>
+            <VideoBackground autoPlay loop muted playsInline>
+                <source src="/back_video.mp4" type="video/mp4" />
+            </VideoBackground>
             <Content>
                 <h1>CineInsight</h1>
                 <span>영화 정보 조회하기</span>
@@ -65,9 +68,28 @@ function Home() {
 
 export default Home;
 
+const VideoBackground = styled.video`
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    min-height: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -100;
+
+    @media (min-aspect-ratio: 16/9) {
+        width: 100%;
+        height: auto;
+    }
+    @media (max-aspect-ratio: 16/9) {
+        width: auto;
+        height: 100%;
+    }
+`;
+
 const HomeContainer = styled.div`
     height: 100%;
-    background-color: #080008;
     overflow: hidden;
 `;
 
@@ -77,26 +99,34 @@ const MovieCategoryBox = styled.div`
     align-items: center;
     justify-content: center;
     margin-top: 40px;
+`;
 
-    .category {
-        width: 80px;
-        height: 80px;
-        background-color: rgba(255, 61, 0, 0.15);
-        margin: 0 10px;
-        font-size: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
+const MovieCategory = styled.div`
+    width: 80px;
+    height: 80px;
+    background-color: rgb(225 88 45 / 75%);
+    margin: 0 10px;
+    font-size: 12px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    cursor: pointer;
 
-        img {
-            width: 25px;
-            margin-bottom: 5px;
+    p {
+        margin: 0;
+    }
+
+    svg {
+        width: 25px;
+        margin-bottom: 5px;
+
+        path {
+            fill: white;
         }
     }
 `;
-
-const MovieCategory = styled.div``;
 
 const Content = styled.div`
     position: absolute;
