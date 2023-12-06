@@ -72,7 +72,7 @@ const VideoBackground = styled.video`
     position: absolute;
     right: 0;
     bottom: 0;
-    min-height: 100%;
+    min-width: 100%;
     min-height: 100%;
     width: auto;
     height: auto;
@@ -98,6 +98,8 @@ const MovieCategoryBox = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
     margin-top: 40px;
 `;
 
@@ -105,7 +107,6 @@ const MovieCategory = styled.div`
     width: 80px;
     height: 80px;
     background-color: rgb(225 88 45 / 75%);
-    margin: 0 10px;
     font-size: 12px;
     border-radius: 5px;
     display: flex;
@@ -140,9 +141,9 @@ const Content = styled.div`
     color: #fff;
 
     h1 {
-        font-size: 65px;
-        font-weight: 600;
+        font-size: calc(2.5rem + 3vw);
         margin-bottom: 40px;
+        font-family: aileron;
     }
 `;
 
