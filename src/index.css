@@ -1,3 +1,8 @@
+@font-face {
+  font-family: aileron;
+  src: url('./font/Aileron-BlackItalic.otf');
+}
+
 :root {
   font-weight: 400;
 
