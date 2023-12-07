@@ -18,7 +18,7 @@ function LeftMenu() {
             <div className="close_btn" onClick={onCloseLeftMenu}>
                 <LeftIcon />
             </div>
-            <MenuIcon>
+            <MenuIconBox>
                 <IconButton>
                     <div className="icon">
                         <HomeIcon />
@@ -55,7 +55,7 @@ function LeftMenu() {
                     </div>
                     <span>코미디</span>
                 </IconButton>
-            </MenuIcon>
+            </MenuIconBox>
         </Container>
     );
 }
@@ -67,7 +67,8 @@ const Container = styled.div<{ $show: boolean }>`
     z-index: 10;
     display: flex;
     flex-direction: column;
-    padding: 40px 0;
+    height: 100%;
+    min-height: 620px;
     background-color: #4f5458;
 
     transition: transform 0.5s;
@@ -92,7 +93,7 @@ const Container = styled.div<{ $show: boolean }>`
     }
 `;
 
-const MenuIcon = styled.div`
+const MenuIconBox = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -100,7 +101,7 @@ const MenuIcon = styled.div`
 
     flex: 1;
     width: 70px;
-    gap: 3rem;
+    gap: 2rem;
 
     @media screen and (min-width: 600px) {
         width: 100px;
