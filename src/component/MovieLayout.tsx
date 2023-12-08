@@ -18,16 +18,10 @@ function MovieLayout({ children }: StrictPropsWithChildren) {
                 <LeftMenu />
                 <RootContainer>
                     <Header>
-                        <div className="title">
-                            <h1>CineInsight</h1>
-                            <span>영화 정보 조회 사이트</span>
-                        </div>
-                        <div
-                            className="menu_btn"
-                            onClick={() => setLeftMenuState(true)}
-                        >
+                        <h1>CineInsight</h1>
+                        <RightArrow onClick={() => setLeftMenuState(true)}>
                             <RightIcon />
-                        </div>
+                        </RightArrow>
                     </Header>
                     <MainContainer>{children}</MainContainer>
                 </RootContainer>
@@ -42,20 +36,17 @@ const RootContainer = styled.div``;
 
 const Header = styled.header`
     position: relative;
+    overflow: hidden;
+    text-align: center;
+`;
 
-    .title {
-        overflow: hidden;
-        text-align: center;
-    }
+const RightArrow = styled.div`
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    display: inline-block;
 
-    .menu_btn {
-        position: absolute;
-        top: 20px;
-        left: 20px;
-        display: inline-block;
-
-        cursor: pointer;
-    }
+    cursor: pointer;
 `;
 
 const MainContainer = styled.main``;
