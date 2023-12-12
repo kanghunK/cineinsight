@@ -13,13 +13,15 @@ export interface responseMovieData {
     results: MovieData[];
 }
 
+export interface responseMoviePoster {}
+
 export const movieApi = createApi({
     reducerPath: "movieApi",
     baseQuery: fetchBaseQuery({ baseUrl: "" }),
     endpoints: (builder) => ({
         getMovieGenreData: builder.query<responseMovieGenre, void>({
             query: () => ({
-                url: `/api/genre/movie/list?language=ko`,
+                url: `/api/3/genre/movie/list?language=ko`,
                 headers: {
                     "Content-type": "appliation/json",
                     Authorization: `Bearer ${apiAccessToken}`,
@@ -28,7 +30,7 @@ export const movieApi = createApi({
         }),
         getSelectedMovieData: builder.query<responseMovieData, number>({
             query: (genreId: number) => ({
-                url: `/api/discover/movie?include_adult=false&include_video=false&language=ko&page=1&sort_by=popularity.desc&with_genres=${genreId}`,
+                url: `/api/3/discover/movie?include_adult=false&include_video=false&language=ko&page=1&sort_by=popularity.desc&with_genres=${genreId}`,
                 headers: {
                     "Content-type": "appliation/json",
                     Authorization: `Bearer ${apiAccessToken}`,
