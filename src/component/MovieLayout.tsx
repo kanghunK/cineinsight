@@ -38,13 +38,19 @@ const Header = styled.header`
     position: relative;
     overflow: hidden;
     text-align: center;
+
+    padding: 20px 0;
+    font-size: 2rem;
 `;
 
 const RightArrow = styled.div`
     position: absolute;
+    display: flex;
+    align-items: center;
+
     top: 20px;
     left: 20px;
-    display: inline-block;
+    height: 24px;
 
     cursor: pointer;
 `;
