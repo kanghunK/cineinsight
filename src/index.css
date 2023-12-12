@@ -3,6 +3,13 @@
   src: url('./font/Aileron-BlackItalic.otf');
 }
 
+@font-face {
+  font-family: 'GmarketSans';
+  src: url('./font/GmarketSansTTFMedium.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+
 :root {
   font-weight: 400;
 
