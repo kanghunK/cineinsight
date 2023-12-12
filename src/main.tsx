@@ -5,6 +5,7 @@ import { Provider } from "react-redux";
 import App from "./App.tsx";
 import { store } from "./app/store.ts";
 import "./index.css";
+import "minireset.css";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
     <React.StrictMode>
