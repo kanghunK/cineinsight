@@ -63,7 +63,7 @@ function LeftMenu() {
 export default LeftMenu;
 
 const Container = styled.div<{ $show: boolean }>`
-    position: absolute;
+    position: fixed;
     z-index: 10;
     display: flex;
     flex-direction: column;

@@ -44,7 +44,7 @@ const Header = styled.header`
 `;
 
 const RightArrow = styled.div`
-    position: absolute;
+    position: fixed;
     display: flex;
     align-items: center;
 
