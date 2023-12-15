@@ -1,4 +1,3 @@
-import { useContext } from "react";
 import styled from "styled-components";
 import ActionIcon from "../assets/action.svg?react";
 import RomanceIcon from "../assets/romance.svg?react";
@@ -7,15 +6,21 @@ import HorrorIcon from "../assets/horror.svg?react";
 import ComedicIcon from "../assets/comedic.svg?react";
 import LeftIcon from "../assets/leftArrow.svg?react";
 import HomeIcon from "../assets/home.svg?react";
-import LeftMenuContext from "../context/LeftMenuContext";
+import { useAppDispatch, useAppSelector } from "@/app/hooks";
+import { changeLeftMenuState } from "@/app/reducer/elementTrigger";
 
 function LeftMenu() {
-    const { leftMenuState, setLeftMenuState } = useContext(LeftMenuContext);
-    const onCloseLeftMenu = () => setLeftMenuState(false);
+    const dispatch = useAppDispatch();
+    const { isOpenedLeftMenu } = useAppSelector(
+        (state) => state.elementTrigger
+    );
 
     return (
-        <Container $show={leftMenuState}>
-            <div className="close_btn" onClick={onCloseLeftMenu}>
+        <Container $show={isOpenedLeftMenu}>
+            <div
+                className="close_btn"
+                onClick={() => dispatch(changeLeftMenuState(false))}
+            >
                 <LeftIcon />
             </div>
             <MenuIconBox>

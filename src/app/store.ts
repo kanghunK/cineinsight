@@ -1,10 +1,12 @@
 import { Action, ThunkAction, configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
 import { movieApi } from "./services/movieAPI";
+import elementTrigger from "./reducer/elementTrigger";
 
 export const store = configureStore({
     reducer: {
         [movieApi.reducerPath]: movieApi.reducer,
+        elementTrigger,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(movieApi.middleware),
