@@ -13,13 +13,16 @@ export interface responseMovieData {
     results: MovieData[];
 }
 
-export interface responseMoviePoster {}
+export interface getMovieByGenreArg {
+    pageNum: number;
+    genreId: number;
+}
 
 export const movieApi = createApi({
     reducerPath: "movieApi",
     baseQuery: fetchBaseQuery({ baseUrl: "" }),
     endpoints: (builder) => ({
-        getMovieGenreData: builder.query<responseMovieGenre, void>({
+        getMovieGenre: builder.query<responseMovieGenre, void>({
             query: () => ({
                 url: `/api/3/genre/movie/list?language=ko`,
                 headers: {
@@ -28,9 +31,12 @@ export const movieApi = createApi({
                 },
             }),
         }),
-        getSelectedMovieData: builder.query<responseMovieData, number>({
-            query: (genreId: number) => ({
-                url: `/api/3/discover/movie?include_adult=false&include_video=false&language=ko&page=1&sort_by=popularity.desc&with_genres=${genreId}`,
+        getMovieByGenre: builder.mutation<
+            responseMovieData,
+            getMovieByGenreArg
+        >({
+            query: ({ pageNum, genreId }) => ({
+                url: `/api/3/discover/movie?include_adult=false&include_video=false&language=ko&page=${pageNum}&sort_by=popularity.desc&with_genres=${genreId}`,
                 headers: {
                     "Content-type": "appliation/json",
                     Authorization: `Bearer ${apiAccessToken}`,
@@ -41,11 +47,10 @@ export const movieApi = createApi({
 });
 
 // 각 쿼리에 해당하는 패칭 함수
-export const { useGetMovieGenreDataQuery, useGetSelectedMovieDataQuery } =
-    movieApi;
+export const { useGetMovieGenreQuery, useGetMovieByGenreMutation } = movieApi;
 
 // rootState에서 movieGenre 데이터를 꺼내는 selector를 생성
-export const movieGenreResult = movieApi.endpoints.getMovieGenreData.select();
+export const movieGenreResult = movieApi.endpoints.getMovieGenre.select();
 export const selectMovieGenre = createSelector(
     movieGenreResult,
     (movieGenreData) => movieGenreData.data

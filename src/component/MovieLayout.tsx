@@ -9,30 +9,37 @@ import RightIcon from "../assets/rightArrow.svg?react";
 
 function MovieLayout({ children }: StrictPropsWithChildren) {
     const dispatch = useAppDispatch();
-    const { modalState } = useAppSelector((state) => state.elementTrigger);
+    const { movieInfoModal } = useAppSelector((state) => state.elementTrigger);
 
     return (
         <>
             <LeftMenu />
-            <RootContainer>
-                <Header>
-                    <h1>CineInsight</h1>
-                    <RightArrow
-                        onClick={() => dispatch(changeLeftMenuState(true))}
-                    >
-                        <RightIcon />
-                    </RightArrow>
-                </Header>
-                <MainContainer>{children}</MainContainer>
-                {modalState.movieInfo && <MovieInfoModal />}
-            </RootContainer>
+            <LayoutWrapper $isOpenedModal={movieInfoModal.isOpened}>
+                <LayoutContainer>
+                    <Header>
+                        <h1>CineInsight</h1>
+                        <RightArrow
+                            onClick={() => dispatch(changeLeftMenuState(true))}
+                        >
+                            <RightIcon />
+                        </RightArrow>
+                    </Header>
+                    <MainContainer>{children}</MainContainer>
+                </LayoutContainer>
+            </LayoutWrapper>
+            {movieInfoModal.isOpened && <MovieInfoModal />}
         </>
     );
 }
 
 export default MovieLayout;
 
-const RootContainer = styled.div`
+const LayoutWrapper = styled.div<{ $isOpenedModal: boolean }>`
+    height: 100vh;
+    overflow: ${({ $isOpenedModal }) => ($isOpenedModal ? "hidden" : "auto")};
+`;
+
+const LayoutContainer = styled.div`
     min-height: 100%;
     background-color: #6f7179;
 `;
