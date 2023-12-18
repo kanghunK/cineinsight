@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useLoaderData, useSearchParams } from "react-router-dom";
 import styled from "styled-components";
 
 import {
@@ -12,6 +12,7 @@ import MovieLayout from "@/component/MovieLayout";
 import { MemoizeMovie } from "@/component/MovieCard";
 import useIntersect from "@/hook/useIntersect";
 import { MovieData } from "@/type/types";
+import { MovieLoaderData } from "@/App";
 
 type imageLoadedObj = {
     [key: number]: boolean;
@@ -20,19 +21,22 @@ type imageLoadedObj = {
 function Movie() {
     const [searchParams] = useSearchParams();
     const selectGenreQuery = searchParams.get("genre");
-    const pageNum = useRef(1);
-    const isExecuted = useRef(false);
+    const pageNum = useRef(2);
+    // const isExecuted = useRef(false);
 
-    const { genres: movieGenre } = useAppSelector(
-        selectMovieGenre
-    ) as responseMovieGenre;
-    const [selectMovieData, setSelectMovieData] = useState<MovieData[]>([]);
-    const currentGenreId = useMemo(() => {
-        const selectedGenre = movieGenre?.find((el) => {
-            if (el.name === selectGenreQuery) return el;
-        });
-        return selectedGenre?.id;
-    }, [selectGenreQuery, movieGenre]);
+    const loaderData = useLoaderData() as MovieLoaderData;
+    const [selectMovieData, setSelectMovieData] = useState<MovieData[]>([
+        ...loaderData.initialMovieData.results,
+    ]);
+    // const { genres: movieGenre } = useAppSelector(
+    //     selectMovieGenre
+    // ) as responseMovieGenre;
+    // const currentGenreId = useMemo(() => {
+    //     const selectedGenre = movieGenre?.find((el) => {
+    //         if (el.name === selectGenreQuery) return el;
+    //     });
+    //     return selectedGenre?.id;
+    // }, [selectGenreQuery, movieGenre]);
 
     // 선택한 무비장르 데이터들 받아오는 요청
     const [
@@ -60,7 +64,7 @@ function Movie() {
     // 다음 페이지 영화 목록 불러오기
     const addSelectMovieData = useCallback(async () => {
         const response = await getMovieByGenre({
-            genreId: currentGenreId ?? 0,
+            genreId: loaderData.genreId ?? 0,
             pageNum: pageNum.current,
         }).unwrap();
 
@@ -73,21 +77,35 @@ function Movie() {
         pageNum.current += 1;
 
         console.log(response);
-    }, [currentGenreId, getMovieByGenre]);
+    }, [getMovieByGenre, loaderData.genreId]);
 
     useEffect(() => {
-        if (import.meta.env.DEV && isExecuted.current) return;
+        console.log("loaderData", loaderData);
 
-        addSelectMovieData();
-        isExecuted.current = true;
+        setSelectMovieData([...loaderData.initialMovieData.results]);
+    }, [loaderData]);
 
-        return () => {
-            setSelectMovieData([]);
-        };
-    }, [addSelectMovieData]);
+    // useEffect(() => {
+    //     // let ignore = false;
+    //     console.log("확인", selectGenreQuery, isExecuted.current);
+    //     // if (import.meta.env.DEV && isExecuted.current) return;
+    //     if (isExecuted.current) return;
+    //     isExecuted.current = true;
+    //     addSelectMovieData();
+
+    //     // isExecuted.current = true;
+
+    //     return () => {
+    //         setSelectMovieData([]);
+    //         // isExecuted.current = false;
+    //         // ignore = true;
+    //     };
+    // }, [addSelectMovieData, selectGenreQuery]);
+
+    // console.log("외부 loaderData", loaderData);
 
     // 장르가 현재 데이터 베이스에서 조회되지 않을때
-    if (!currentGenreId) {
+    if (!loaderData) {
         return <div>선택하신 장르를 조회할 수 없습니다..</div>;
     }
 
