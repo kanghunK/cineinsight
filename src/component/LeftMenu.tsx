@@ -8,12 +8,17 @@ import LeftIcon from "../assets/leftArrow.svg?react";
 import HomeIcon from "../assets/home.svg?react";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { changeLeftMenuState } from "@/app/reducer/elementTrigger";
+import { useNavigate } from "react-router-dom";
 
 function LeftMenu() {
+    const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const { isOpenedLeftMenu } = useAppSelector(
         (state) => state.elementTrigger
     );
+
+    const loadMovieByGenre = (genre: string) => () =>
+        navigate(`/movie/${genre}`);
 
     return (
         <Container $show={isOpenedLeftMenu}>
@@ -24,37 +29,37 @@ function LeftMenu() {
                 <LeftIcon />
             </div>
             <MenuIconBox>
-                <IconButton>
+                <IconButton onClick={() => navigate("/")}>
                     <div className="icon">
                         <HomeIcon />
                     </div>
                     <span>홈으로</span>
                 </IconButton>
-                <IconButton>
+                <IconButton onClick={loadMovieByGenre("액션")}>
                     <div className="icon">
                         <ActionIcon />
                     </div>
                     <span>액션</span>
                 </IconButton>
-                <IconButton>
+                <IconButton onClick={loadMovieByGenre("로맨스")}>
                     <div className="icon">
                         <RomanceIcon />
                     </div>
                     <span>로맨스</span>
                 </IconButton>
-                <IconButton>
+                <IconButton onClick={loadMovieByGenre("스릴러")}>
                     <div className="icon">
                         <ThillerIcon />
                     </div>
                     <span>스릴러</span>
                 </IconButton>
-                <IconButton>
+                <IconButton onClick={loadMovieByGenre("공포")}>
                     <div className="icon">
                         <HorrorIcon />
                     </div>
                     <span>공포</span>
                 </IconButton>
-                <IconButton>
+                <IconButton onClick={loadMovieByGenre("코미디")}>
                     <div className="icon">
                         <ComedicIcon />
                     </div>
