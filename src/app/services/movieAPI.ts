@@ -4,21 +4,21 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 const apiAccessToken = import.meta.env.VITE_ACCESS_TOKEN;
 
-export interface responseMovieGenre {
+export interface ResponseMovieGenre {
     genres: MovieGenreData[];
 }
 
-export interface responseMovieData {
+export interface ResponseMovieData {
     page: number;
     results: MovieData[];
 }
 
-export interface getMovieByGenreArg {
+export interface GetMovieByGenreArg {
     pageNum: number;
     genreId: number;
 }
 
-export interface getSearchMovieArg {
+export interface GetSearchMovieArg {
     pageNum: number;
     searchValue: string;
 }
@@ -27,7 +27,7 @@ export const movieApi = createApi({
     reducerPath: "movieApi",
     baseQuery: fetchBaseQuery({ baseUrl: "" }),
     endpoints: (builder) => ({
-        getMovieGenre: builder.query<responseMovieGenre, void>({
+        getMovieGenre: builder.query<ResponseMovieGenre, void>({
             query: () => ({
                 url: `/api/3/genre/movie/list?language=ko`,
                 headers: {
@@ -37,8 +37,8 @@ export const movieApi = createApi({
             }),
         }),
         getMovieByGenre: builder.mutation<
-            responseMovieData,
-            getMovieByGenreArg
+            ResponseMovieData,
+            GetMovieByGenreArg
         >({
             query: ({ pageNum, genreId }) => ({
                 url: `/api/3/discover/movie?include_adult=false&include_video=false&language=ko&page=${pageNum}&sort_by=popularity.desc&with_genres=${genreId}`,
@@ -48,7 +48,7 @@ export const movieApi = createApi({
                 },
             }),
         }),
-        getSearchMovie: builder.mutation<responseMovieData, getSearchMovieArg>({
+        getSearchMovie: builder.mutation<ResponseMovieData, GetSearchMovieArg>({
             query: ({ pageNum, searchValue }) => ({
                 url: `/api/3/search/movie?query=${searchValue}&include_adult=false&language=ko&page=${pageNum}`,
                 headers: {
