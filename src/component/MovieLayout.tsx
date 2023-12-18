@@ -55,7 +55,7 @@ const Header = styled.header`
     h1 {
         color: #f2f3f4;
         font-size: calc(2rem + 1vw);
-        font-family: aileron;
+        font-family: "Aileron";
     }
 `;
 

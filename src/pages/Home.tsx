@@ -166,7 +166,7 @@ const Content = styled.div`
     h1 {
         font-size: calc(2.5rem + 3vw);
         margin-bottom: 40px;
-        font-family: aileron;
+        font-family: "Aileron";
     }
 `;
 

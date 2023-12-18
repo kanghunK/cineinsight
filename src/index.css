@@ -1,6 +1,11 @@
 @font-face {
-  font-family: aileron;
+  font-family: 'AileronItalic';
   src: url('./font/Aileron-BlackItalic.otf');
+}
+
+@font-face {
+  font-family: 'Aileron';
+  src: url('./font/Aileron-Black.otf');
 }
 
 @font-face {
