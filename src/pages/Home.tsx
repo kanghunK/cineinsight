@@ -23,12 +23,14 @@ function Home() {
 
     const handleSearchMovie = (e: React.FormEvent<FormElementAtHome>) => {
         e.preventDefault();
+        const inputValue = e.currentTarget.elements.searchMovieInput.value;
 
-        console.log("검색", e.currentTarget.elements.searchMovieInput.value);
+        if (!inputValue) {
+            alert("검색어를 입력해주세요!");
+            return;
+        }
 
-        navigate(
-            `/movie?search=${e.currentTarget.elements.searchMovieInput.value}`
-        );
+        navigate(`/movie?search=${inputValue}`);
     };
 
     return (
@@ -74,7 +76,7 @@ function Home() {
                         <ThillerIcon />
                         <p>Thiller</p>
                     </MovieCategory>
-                    <MovieCategory onClick={goToMoviePage("호러")}>
+                    <MovieCategory onClick={goToMoviePage("공포")}>
                         <HorrorIcon />
                         <p>Horror</p>
                     </MovieCategory>
