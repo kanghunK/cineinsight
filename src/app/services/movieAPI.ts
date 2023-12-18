@@ -18,6 +18,11 @@ export interface getMovieByGenreArg {
     genreId: number;
 }
 
+export interface getSearchMovieArg {
+    pageNum: number;
+    searchValue: string;
+}
+
 export const movieApi = createApi({
     reducerPath: "movieApi",
     baseQuery: fetchBaseQuery({ baseUrl: "" }),
@@ -43,11 +48,24 @@ export const movieApi = createApi({
                 },
             }),
         }),
+        getSearchMovie: builder.mutation<responseMovieData, getSearchMovieArg>({
+            query: ({ pageNum, searchValue }) => ({
+                url: `/api/3/search/movie?query=${searchValue}&include_adult=false&language=ko&page=${pageNum}`,
+                headers: {
+                    "Content-type": "appliation/json",
+                    Authorization: `Bearer ${apiAccessToken}`,
+                },
+            }),
+        }),
     }),
 });
 
 // 각 쿼리에 해당하는 패칭 함수
-export const { useGetMovieGenreQuery, useGetMovieByGenreMutation } = movieApi;
+export const {
+    useGetMovieGenreQuery,
+    useGetMovieByGenreMutation,
+    useGetSearchMovieMutation,
+} = movieApi;
 
 // rootState에서 movieGenre 데이터를 꺼내는 selector를 생성
 export const movieGenreResult = movieApi.endpoints.getMovieGenre.select();

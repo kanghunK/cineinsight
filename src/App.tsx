@@ -5,9 +5,16 @@ import {
     responseMovieData,
     useGetMovieGenreQuery,
 } from "./app/services/movieAPI";
+import SearchResult from "./pages/SearchResult";
 
 export interface MovieLoaderData {
     genreId: number;
+    genreName: string;
+    initialMovieData: responseMovieData;
+}
+
+export interface searchMovieLoaderData {
+    searchValue: string;
     initialMovieData: responseMovieData;
 }
 
@@ -19,6 +26,39 @@ function App() {
         {
             path: "/",
             element: <Home />,
+        },
+        {
+            path: "/movie",
+            element: <SearchResult />,
+            loader: async ({ request }) => {
+                const searchValue = new URL(request.url).searchParams.get(
+                    "search"
+                );
+
+                if (!searchValue)
+                    throw new Response("Not Found", { status: 404 });
+
+                const response = await fetch(
+                    `/api/3/search/movie?query=${searchValue}&include_adult=false&language=ko&page=1`,
+                    {
+                        headers: {
+                            "Content-type": "appliation/json",
+                            Authorization: `Bearer ${apiAccessToken}`,
+                        },
+                    }
+                );
+
+                const responseData = await response.json();
+                const searchMovieLoaderData: searchMovieLoaderData = {
+                    searchValue: searchValue,
+                    initialMovieData: responseData,
+                };
+
+                console.log("response: ", searchMovieLoaderData);
+
+                return searchMovieLoaderData;
+            },
+            errorElement: <div>에러 엘레멘트</div>,
         },
         {
             path: "/movie/:genre",
@@ -44,6 +84,7 @@ function App() {
                 const responseData = await response.json();
                 const movieLoaderData: MovieLoaderData = {
                     genreId: selectedGenre.id,
+                    genreName: selectedGenre.name,
                     initialMovieData: responseData,
                 };
 

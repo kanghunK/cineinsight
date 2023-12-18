@@ -1,13 +1,35 @@
 import { useState } from "react";
 import styled from "styled-components";
 import ActionIcon from "@/assets/action.svg?react";
-import RomanceIcon from "@/assets/comedic.svg?react";
+import ComedicIcon from "@/assets/comedic.svg?react";
 import ThillerIcon from "@/assets/thriller.svg?react";
 import HorrorIcon from "@/assets/horror.svg?react";
-import ComedicIcon from "@/assets/romance.svg?react";
+import RomanceIcon from "@/assets/romance.svg?react";
+import { useNavigate } from "react-router-dom";
+
+interface SeachFormElements extends HTMLFormControlsCollection {
+    searchMovieInput: HTMLInputElement;
+}
+
+interface FormElementAtHome extends HTMLFormElement {
+    readonly elements: SeachFormElements;
+}
 
 function Home() {
+    const navigate = useNavigate();
     const [focused, setFocused] = useState<boolean>(false);
+
+    const goToMoviePage = (genre: string) => () => navigate(`/movie/${genre}`);
+
+    const handleSearchMovie = (e: React.FormEvent<FormElementAtHome>) => {
+        e.preventDefault();
+
+        console.log("검색", e.currentTarget.elements.searchMovieInput.value);
+
+        navigate(
+            `/movie?search=${e.currentTarget.elements.searchMovieInput.value}`
+        );
+    };
 
     return (
         <HomeContainer>
@@ -17,7 +39,7 @@ function Home() {
             <Content>
                 <h1>CineInsight</h1>
                 <span>영화 정보 조회하기</span>
-                <form>
+                <form onSubmit={handleSearchMovie}>
                     <SearchFormChildDiv>
                         <SearchFormLabelBox $focused={focused}>
                             <label>&#x270e; 영화 제목</label>
@@ -26,7 +48,7 @@ function Home() {
                                     type="text"
                                     minLength={1}
                                     maxLength={100}
-                                    name="movie-title"
+                                    name="searchMovieInput"
                                     onFocus={() => setFocused(true)}
                                     onBlur={() => setFocused(false)}
                                 />
@@ -40,23 +62,23 @@ function Home() {
                     </SearchFormChildDiv>
                 </form>
                 <MovieCategoryBox>
-                    <MovieCategory>
+                    <MovieCategory onClick={goToMoviePage("액션")}>
                         <ActionIcon />
                         <p>Action</p>
                     </MovieCategory>
-                    <MovieCategory>
+                    <MovieCategory onClick={goToMoviePage("로맨스")}>
                         <RomanceIcon />
                         <p>Romance</p>
                     </MovieCategory>
-                    <MovieCategory>
+                    <MovieCategory onClick={goToMoviePage("스릴러")}>
                         <ThillerIcon />
                         <p>Thiller</p>
                     </MovieCategory>
-                    <MovieCategory>
+                    <MovieCategory onClick={goToMoviePage("호러")}>
                         <HorrorIcon />
                         <p>Horror</p>
                     </MovieCategory>
-                    <MovieCategory>
+                    <MovieCategory onClick={goToMoviePage("코미디")}>
                         <ComedicIcon />
                         <p>Comedic</p>
                     </MovieCategory>
@@ -67,6 +89,11 @@ function Home() {
 }
 
 export default Home;
+
+const HomeContainer = styled.div`
+    height: 100vh;
+    overflow: hidden;
+`;
 
 const VideoBackground = styled.video`
     position: absolute;
@@ -87,11 +114,6 @@ const VideoBackground = styled.video`
         width: auto;
         height: 100%;
     }
-`;
-
-const HomeContainer = styled.div`
-    height: 100%;
-    overflow: hidden;
 `;
 
 const MovieCategoryBox = styled.div`
