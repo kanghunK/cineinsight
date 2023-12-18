@@ -6,6 +6,8 @@ import {
     useGetMovieGenreQuery,
 } from "./app/services/movieAPI";
 import SearchResult from "./pages/SearchResult";
+import { lazy, Suspense } from "react";
+import Loading from "./component/Loading";
 
 export interface MovieLoaderData {
     genreId: number;
@@ -18,6 +20,10 @@ export interface SearchMovieLoaderData {
     initialMovieData: ResponseMovieData;
 }
 
+const HomePage = lazy(() => import("@/pages/Home"));
+const MoviePage = lazy(() => import("@/pages/Movie"));
+const SearchResultPage = lazy(() => import("@/pages/SearchResult"));
+
 function App() {
     const apiAccessToken = import.meta.env.VITE_ACCESS_TOKEN;
     const { data: genreInfo, error, isLoading } = useGetMovieGenreQuery();
@@ -25,11 +31,11 @@ function App() {
     const router = createBrowserRouter([
         {
             path: "/",
-            element: <Home />,
+            element: <HomePage />,
         },
         {
             path: "/movie",
-            element: <SearchResult />,
+            element: <SearchResultPage />,
             loader: async ({ request }) => {
                 const searchValue = new URL(request.url).searchParams.get(
                     "search"
@@ -62,7 +68,7 @@ function App() {
         },
         {
             path: "/movie/:genre",
-            element: <Movie />,
+            element: <MoviePage />,
             loader: async ({ params }) => {
                 const selectedGenre = genreInfo?.genres.find(
                     (el) => el.name === params.genre
@@ -96,11 +102,15 @@ function App() {
         },
     ]);
 
-    if (isLoading && !error) return <div>로딩중...</div>;
+    if (isLoading && !error) return <Loading />;
 
     if (error) return <div>데이터 서버에 연결하지 못하였습니다..</div>;
 
-    return <RouterProvider router={router} />;
+    return (
+        <Suspense fallback={<Loading />}>
+            <RouterProvider router={router} />
+        </Suspense>
+    );
 }
 
 export default App;
