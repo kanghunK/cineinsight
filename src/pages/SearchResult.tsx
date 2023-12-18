@@ -1,4 +1,4 @@
-import { searchMovieLoaderData } from "@/App";
+import { SearchMovieLoaderData } from "@/App";
 import { useGetSearchMovieMutation } from "@/app/services/movieAPI";
 import { MemoizeMovie } from "@/component/MovieCard";
 import MovieLayout from "@/component/MovieLayout";
@@ -8,13 +8,13 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useLoaderData } from "react-router-dom";
 import styled from "styled-components";
 
-type imageLoadedObj = {
+type ImageLoadedObj = {
     [key: number]: boolean;
 };
 
 function SearchResult() {
     const pageNum = useRef(2);
-    const loaderData = useLoaderData() as searchMovieLoaderData;
+    const loaderData = useLoaderData() as SearchMovieLoaderData;
     const [selectMovieData, setSelectMovieData] = useState<MovieData[]>([
         ...loaderData.initialMovieData.results,
     ]);
@@ -50,7 +50,7 @@ function SearchResult() {
 
         setSelectMovieData((prev) => [...prev, ...response.results]);
 
-        const newObj: imageLoadedObj = {};
+        const newObj: ImageLoadedObj = {};
         response.results.forEach((el) => {
             newObj[el.id] = false;
         });

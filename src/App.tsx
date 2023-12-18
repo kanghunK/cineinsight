@@ -2,7 +2,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./pages/Home";
 import Movie from "./pages/Movie";
 import {
-    responseMovieData,
+    ResponseMovieData,
     useGetMovieGenreQuery,
 } from "./app/services/movieAPI";
 import SearchResult from "./pages/SearchResult";
@@ -10,12 +10,12 @@ import SearchResult from "./pages/SearchResult";
 export interface MovieLoaderData {
     genreId: number;
     genreName: string;
-    initialMovieData: responseMovieData;
+    initialMovieData: ResponseMovieData;
 }
 
-export interface searchMovieLoaderData {
+export interface SearchMovieLoaderData {
     searchValue: string;
-    initialMovieData: responseMovieData;
+    initialMovieData: ResponseMovieData;
 }
 
 function App() {
@@ -49,14 +49,14 @@ function App() {
                 );
 
                 const responseData = await response.json();
-                const searchMovieLoaderData: searchMovieLoaderData = {
+                const SearchMovieLoaderData: SearchMovieLoaderData = {
                     searchValue: searchValue,
                     initialMovieData: responseData,
                 };
 
-                console.log("response: ", searchMovieLoaderData);
+                console.log("response: ", SearchMovieLoaderData);
 
-                return searchMovieLoaderData;
+                return SearchMovieLoaderData;
             },
             errorElement: <div>에러 엘레멘트</div>,
         },
