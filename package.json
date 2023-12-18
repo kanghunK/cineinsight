@@ -17,6 +17,7 @@
     "react-custom-scrollbars-2": "^4.5.0",
     "react-dom": "^18.2.0",
     "react-lazy-load-image-component": "^1.6.0",
+    "react-loader-spinner": "^6.1.1-0",
     "react-redux": "^9.0.3",
     "react-router-dom": "^6.20.0",
     "styled-components": "^6.1.1"
