@@ -7,9 +7,11 @@ import MovieInfoModal from "./MovieInfoModal";
 import { StrictPropsWithChildren } from "../type/types";
 import RightIcon from "../assets/rightArrow.svg?react";
 import MovieSearch from "./MovieSearch";
+import { useNavigate } from "react-router";
 
 function MovieLayout({ children }: StrictPropsWithChildren) {
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
     const { movieInfoModal } = useAppSelector((state) => state.elementTrigger);
 
     return (
@@ -18,7 +20,9 @@ function MovieLayout({ children }: StrictPropsWithChildren) {
             <LayoutWrapper $isOpenedModal={movieInfoModal.isOpened}>
                 <LayoutContainer>
                     <Header>
-                        <h1>CineInsight</h1>
+                        <div>
+                            <h1 onClick={() => navigate("/")}>CineInsight</h1>
+                        </div>
                         <div style={{ marginTop: "2.5rem", color: "white" }}>
                             <MovieSearch />
                         </div>
@@ -57,9 +61,12 @@ const Header = styled.header`
     font-size: 2rem;
 
     h1 {
+        display: inline-block;
+        cursor: pointer;
+
         color: #f2f3f4;
-        font-size: calc(2rem + 1vw);
         font-family: "Aileron";
+        font-size: calc(2rem + 1vw);
     }
 `;
 
