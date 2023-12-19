@@ -6,6 +6,7 @@ import LeftMenu from "./LeftMenu";
 import MovieInfoModal from "./MovieInfoModal";
 import { StrictPropsWithChildren } from "../type/types";
 import RightIcon from "../assets/rightArrow.svg?react";
+import MovieSearch from "./MovieSearch";
 
 function MovieLayout({ children }: StrictPropsWithChildren) {
     const dispatch = useAppDispatch();
@@ -18,6 +19,9 @@ function MovieLayout({ children }: StrictPropsWithChildren) {
                 <LayoutContainer>
                     <Header>
                         <h1>CineInsight</h1>
+                        <div style={{ marginTop: "2.5rem", color: "white" }}>
+                            <MovieSearch />
+                        </div>
                         <RightArrow
                             onClick={() => dispatch(changeLeftMenuState(true))}
                         >
