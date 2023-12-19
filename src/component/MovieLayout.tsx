@@ -91,4 +91,6 @@ const RightArrow = styled.div`
     }
 `;
 
-const MainContainer = styled.main``;
+const MainContainer = styled.main`
+    margin-top: 1.5rem;
+`;

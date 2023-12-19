@@ -8,15 +8,13 @@ import { MemoizeMovie } from "@/component/MovieCard";
 import useIntersect from "@/hook/useIntersect";
 import { MovieData } from "@/type/types";
 import { MovieLoaderData } from "@/App";
-
-type ImageLoadedObj = {
-    [key: number]: boolean;
-};
+import { ThreeDots } from "react-loader-spinner";
 
 function Movie() {
     const pageNum = useRef(2);
 
     const loaderData = useLoaderData() as MovieLoaderData;
+    const [dataLoadEnd, setDataLoadEnd] = useState(false);
     const [selectMovieData, setSelectMovieData] = useState<MovieData[]>([
         ...loaderData.initialMovieData.results,
     ]);
@@ -34,6 +32,7 @@ function Movie() {
                 entry.intersectionRatio <= 0 ||
                 !entry.isIntersecting ||
                 selectMovieData.length === 0 ||
+                dataLoadEnd ||
                 isLoadingMovieData
             )
                 return;
@@ -46,18 +45,24 @@ function Movie() {
 
     // 다음 페이지 영화 목록 불러오기
     const addSelectMovieData = useCallback(async () => {
-        const response = await getMovieByGenre({
-            genreId: loaderData.genreId ?? 0,
-            pageNum: pageNum.current,
-        }).unwrap();
+        try {
+            const response = await getMovieByGenre({
+                genreId: loaderData.genreId ?? 0,
+                pageNum: pageNum.current,
+            }).unwrap();
 
-        setSelectMovieData((prev) => [...prev, ...response.results]);
+            if (!response) throw new Error("서버 에러");
 
-        const newObj: ImageLoadedObj = {};
-        response.results.forEach((el) => {
-            newObj[el.id] = false;
-        });
-        pageNum.current += 1;
+            if (response.results.length === 0) {
+                setDataLoadEnd(true);
+                return;
+            }
+
+            setSelectMovieData((prev) => [...prev, ...response.results]);
+            pageNum.current += 1;
+        } catch (error) {
+            console.log("오류 발생 시 toast 띄우기");
+        }
     }, [getMovieByGenre, loaderData.genreId]);
 
     useEffect(() => {
@@ -89,10 +94,24 @@ function Movie() {
                             />
                         ))
                     ) : (
-                        <div>선택된 데이터가 없습니다..</div>
+                        <NoticeText>선택된 데이터가 없습니다..</NoticeText>
                     )}
                 </Content>
-                {isLoadingMovieData && <div>데이터 로딩중..</div>}
+                {isLoadingMovieData && (
+                    <DataLoading>
+                        <ThreeDots
+                            height="80"
+                            width="80"
+                            radius="9"
+                            color="#F7F9FF"
+                            ariaLabel="three-dots-loading"
+                            wrapperStyle={{}}
+                            wrapperClass=""
+                            visible={true}
+                        />
+                    </DataLoading>
+                )}
+                {dataLoadEnd && <NoticeText>마지막 페이지 입니다.</NoticeText>}
                 <ObserverTarget ref={observerRef} />
             </ContentBox>
         </MovieLayout>
@@ -127,4 +146,21 @@ const Content = styled.div`
 
 const ObserverTarget = styled.div`
     height: 20px;
+`;
+
+const DataLoading = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+`;
+
+const NoticeText = styled.div`
+    text-align: center;
+    color: #f7f9ff;
+
+    width: 100%;
+    margin: 0.4rem 0;
+    font-size: 1.1rem;
 `;
