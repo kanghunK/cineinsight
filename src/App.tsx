@@ -1,13 +1,11 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Home from "./pages/Home";
-import Movie from "./pages/Movie";
 import {
     ResponseMovieData,
     useGetMovieGenreQuery,
 } from "./app/services/movieAPI";
-import SearchResult from "./pages/SearchResult";
 import { lazy, Suspense } from "react";
 import Loading from "./component/Loading";
+import ErrorBoundary from "./component/ErrorBoundary";
 
 export interface MovieLoaderData {
     genreId: number;
@@ -32,6 +30,7 @@ function App() {
         {
             path: "/",
             element: <HomePage />,
+            errorElement: <ErrorBoundary />,
         },
         {
             path: "/movie",
@@ -41,8 +40,10 @@ function App() {
                     "search"
                 );
 
+                if (error) throw error;
+
                 if (!searchValue)
-                    throw new Response("Not Found", { status: 404 });
+                    throw new Response("Not found page", { status: 404 });
 
                 const response = await fetch(
                     `/api/3/search/movie?query=${searchValue}&include_adult=false&language=ko&page=1`,
@@ -60,11 +61,9 @@ function App() {
                     initialMovieData: responseData,
                 };
 
-                console.log("response: ", SearchMovieLoaderData);
-
                 return SearchMovieLoaderData;
             },
-            errorElement: <div>에러 엘레멘트</div>,
+            errorElement: <ErrorBoundary />,
         },
         {
             path: "/movie/:genre",
@@ -74,8 +73,10 @@ function App() {
                     (el) => el.name === params.genre
                 );
 
+                if (error) throw error;
+
                 if (!selectedGenre)
-                    throw new Response("Not Found", { status: 404 });
+                    throw new Response("Not found page", { status: 404 });
 
                 const response = await fetch(
                     `/api/3/discover/movie?include_adult=false&include_video=false&language=ko&page=1&sort_by=popularity.desc&with_genres=${selectedGenre.id}`,
@@ -94,17 +95,13 @@ function App() {
                     initialMovieData: responseData,
                 };
 
-                console.log("response: ", movieLoaderData);
-
                 return movieLoaderData;
             },
-            errorElement: <div>에러 엘레멘트</div>,
+            errorElement: <ErrorBoundary />,
         },
     ]);
 
     if (isLoading && !error) return <Loading />;
-
-    if (error) return <div>데이터 서버에 연결하지 못하였습니다..</div>;
 
     return (
         <Suspense fallback={<Loading />}>
