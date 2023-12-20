@@ -30,7 +30,7 @@ function LeftMenu() {
             </div>
             <MenuIconBox>
                 <IconButton onClick={() => navigate("/")}>
-                    <div className="icon">
+                    <div className="icon home">
                         <HomeIcon />
                     </div>
                     <span>홈으로</span>
@@ -126,8 +126,17 @@ const IconButton = styled.div`
     text-align: center;
     cursor: pointer;
 
-    svg path {
+    :not(.home) svg path {
         fill: #ccd2d7;
+    }
+
+    .icon {
+        width: 30px;
+        margin: auto;
+    }
+
+    .home svg {
+        stroke: #ccd2d7;
     }
 
     &:hover {
@@ -136,11 +145,6 @@ const IconButton = styled.div`
         svg g path {
             fill: #e8ece5;
         }
-    }
-
-    .icon {
-        width: 30px;
-        margin: auto;
     }
 
     @media screen and (min-width: 600px) {
