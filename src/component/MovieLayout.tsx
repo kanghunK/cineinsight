@@ -65,8 +65,8 @@ const Header = styled.header`
         cursor: pointer;
 
         color: #f2f3f4;
-        font-family: "Aileron";
-        font-size: calc(2rem + 1vw);
+        font-family: "BACKTO1982";
+        font-size: calc(1rem + 2.3vw);
     }
 `;
 

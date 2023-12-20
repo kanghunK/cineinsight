@@ -125,8 +125,8 @@ const Content = styled.div`
     color: #fff;
 
     h1 {
-        font-size: calc(2.5rem + 3vw);
+        font-size: calc(0.7rem + 5vw);
         margin-bottom: 40px;
-        font-family: "Aileron";
+        font-family: "BACKTO1982";
     }
 `;
