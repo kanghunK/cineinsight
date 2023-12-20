@@ -43,40 +43,27 @@ function SearchResult() {
 
     // 검색한 영화 페이지 불러오기
     const addSearchMovieData = useCallback(async () => {
-        try {
-            const response = await getSearchMovie({
-                searchValue: loaderData.searchValue,
-                pageNum: pageNum.current,
-            }).unwrap();
+        const response = await getSearchMovie({
+            searchValue: loaderData.searchValue,
+            pageNum: pageNum.current,
+        }).unwrap();
 
-            if (!response) throw new Error("서버 에러");
+        if (!response) throw new Error("서버 에러");
 
-            if (response.results.length === 0) {
-                setDataLoadEnd(true);
-                return;
-            }
-
-            setSelectMovieData((prev) => [...prev, ...response.results]);
-            pageNum.current += 1;
-        } catch (error) {
-            console.log("오류 발생 시 toast 띄우기");
+        if (response.results.length === 0) {
+            setDataLoadEnd(true);
+            return;
         }
+
+        setSelectMovieData((prev) => [...prev, ...response.results]);
+        pageNum.current += 1;
     }, [getSearchMovie, loaderData.searchValue]);
 
     useEffect(() => {
-        console.log("loaderData", loaderData);
-
         setSelectMovieData([...loaderData.initialMovieData.results]);
     }, [loaderData]);
 
-    // 장르가 현재 데이터 베이스에서 조회되지 않을때
-    if (!loaderData) {
-        return <div>선택하신 장르를 조회할 수 없습니다..</div>;
-    }
-
-    if (loadMovieDataError) {
-        console.log("오류 발생 시 toast 띄우기");
-    }
+    if (loadMovieDataError) throw loadMovieDataError;
 
     return (
         <MovieLayout>
