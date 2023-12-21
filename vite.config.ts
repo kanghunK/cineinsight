@@ -13,7 +13,7 @@ export default ({ mode }) => {
         server: {
             proxy: {
                 "/api": {
-                    target: process.env.API_URL,
+                    target: "https://api.themoviedb.org",
                     changeOrigin: true,
                     rewrite: (path) => path.replace(/^\/api/, ""),
                 },
