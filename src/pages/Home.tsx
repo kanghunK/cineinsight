@@ -6,7 +6,7 @@ import ComedicIcon from "@/assets/comedic.svg?react";
 import ThillerIcon from "@/assets/thriller.svg?react";
 import HorrorIcon from "@/assets/horror.svg?react";
 import RomanceIcon from "@/assets/romance.svg?react";
-import backVideo from "@/assets/back_video.mp4?url";
+import backVideo from "@/assets/back_video.mp4";
 import MovieSearch from "@/component/MovieSearch";
 
 function Home() {
