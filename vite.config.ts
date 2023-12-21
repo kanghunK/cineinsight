@@ -19,10 +19,8 @@ export default ({ mode }) => {
                 },
             },
         },
-        root: "./",
         build: {
             outDir: "dist",
         },
-        publicDir: "assets",
     });
 };
