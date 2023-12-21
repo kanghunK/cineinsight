@@ -6,6 +6,7 @@ import ComedicIcon from "@/assets/comedic.svg?react";
 import ThillerIcon from "@/assets/thriller.svg?react";
 import HorrorIcon from "@/assets/horror.svg?react";
 import RomanceIcon from "@/assets/romance.svg?react";
+import backVideo from "@/assets/back_video.mp4?url";
 import MovieSearch from "@/component/MovieSearch";
 
 function Home() {
@@ -16,7 +17,7 @@ function Home() {
     return (
         <HomeContainer>
             <VideoBackground autoPlay loop muted playsInline>
-                <source src="/back_video.mp4" type="video/mp4" />
+                <source src={backVideo} type="video/mp4" />
             </VideoBackground>
             <Content>
                 <h1>CineInsight</h1>

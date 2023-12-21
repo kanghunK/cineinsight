@@ -2,7 +2,7 @@ import { MovieData, MovieGenreData } from "@/type/types";
 import { createSelector } from "@reduxjs/toolkit";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-const apiAccessToken = process.env.ACCESS_TOKEN;
+const apiAccessToken = import.meta.env.VITE_ACCESS_TOKEN;
 
 export interface ResponseMovieGenre {
     genres: MovieGenreData[];
