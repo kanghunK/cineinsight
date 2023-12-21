@@ -9,6 +9,9 @@ export default ({ mode }) => {
 
     return defineConfig({
         plugins: [react(), svgr(), tsconfigPaths()],
+        base:
+            process.env.VITE_BASE_PATH ||
+            "/deploy_react_app_github_pages_vercel",
         assetsInclude: ["**/*.mp4"],
         server: {
             proxy: {
