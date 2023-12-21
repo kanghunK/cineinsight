@@ -16,7 +16,7 @@ function Home() {
     return (
         <HomeContainer>
             <VideoBackground autoPlay loop muted playsInline>
-                <source src="/back_video.mp4" type="video/mp4" />
+                <source src="/assets/back_video.mp4" type="video/mp4" />
             </VideoBackground>
             <Content>
                 <h1>CineInsight</h1>
