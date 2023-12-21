@@ -21,7 +21,7 @@ export default ({ mode }) => {
         },
         root: "./",
         build: {
-            outDir: "public",
+            outDir: "dist",
         },
         publicDir: "assets",
     });
