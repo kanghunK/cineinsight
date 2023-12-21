@@ -13,11 +13,16 @@ export default ({ mode }) => {
         server: {
             proxy: {
                 "/api": {
-                    target: "https://api.themoviedb.org",
+                    target: process.env.API_URL,
                     changeOrigin: true,
                     rewrite: (path) => path.replace(/^\/api/, ""),
                 },
             },
         },
+        root: "./",
+        build: {
+            outDir: "public",
+        },
+        publicDir: "assets",
     });
 };
