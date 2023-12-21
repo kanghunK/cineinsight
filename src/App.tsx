@@ -23,9 +23,7 @@ const MoviePage = lazy(() => import("@/pages/Movie"));
 const SearchResultPage = lazy(() => import("@/pages/SearchResult"));
 
 function App() {
-    const apiAccessToken = import.meta.env.PROD
-        ? process.env.ACCESS_TOKEN
-        : import.meta.env.VITE_ACCESS_TOKEN;
+    const apiAccessToken = process.env.ACCESS_TOKEN;
     const { data: genreInfo, error, isLoading } = useGetMovieGenreQuery();
 
     const router = createBrowserRouter([
