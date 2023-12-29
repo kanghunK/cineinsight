@@ -19,7 +19,7 @@ function Home() {
                 <source
                     src={`${
                         import.meta.env.VITE_DEPLOY_URL
-                    }/videos/back_video.mp4`}
+                    }videos/back_video.mp4`}
                     type="video/mp4"
                 />
             </VideoBackground>
