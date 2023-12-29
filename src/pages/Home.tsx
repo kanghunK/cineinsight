@@ -16,10 +16,7 @@ function Home() {
     return (
         <HomeContainer>
             <VideoBackground autoPlay loop muted playsInline>
-                <source
-                    src={`${import.meta.env.VITE_VIDEO_URL}/back_video.mp4`}
-                    type="video/mp4"
-                />
+                <source src={`/videos/back_video.mp4`} type="video/mp4" />
             </VideoBackground>
             <Content>
                 <h1>CineInsight</h1>
