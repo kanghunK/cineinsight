@@ -28,4 +28,4 @@
 
 ## :link: 접속링크
 
--   배포 링크: [https://cineinsight-e4i20g2f7-kanghunks-projects.vercel.app/](https://cineinsight-e4i20g2f7-kanghunks-projects.vercel.app/)
+-   배포 링크: [https://cineinsight.vercel.app/](https://cineinsight.vercel.app/)
